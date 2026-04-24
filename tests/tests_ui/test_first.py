@@ -2,9 +2,9 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
 
-def test_name_field():
+def test_name_field(browser):
 
-    driver = webdriver.Chrome()
+
 
     driver.get('https://lms.threadqa.ru/xpath-practice-hub/basics')
     time.sleep (3)
@@ -32,4 +32,4 @@ def test_name_field():
     assert name_field.get_attribute("value") == "Смирнов тест"
     time.sleep(2)
 
-    driver.quit()
+
