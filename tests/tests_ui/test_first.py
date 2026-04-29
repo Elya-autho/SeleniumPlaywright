@@ -2,20 +2,17 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
 
-def test_name_field(browser):
+def test_name_field(browser, base_url, user_names):
 
-
-
-    driver.get('https://lms.threadqa.ru/xpath-practice-hub/basics')
-    time.sleep (3)
+    browser.get(base_url)
 
     #ищем элемент по data-testing="username-field"
-    name_field = driver.find_element(By.CSS_SELECTOR, "[data-testid='username-field']")
+    name_field = browser.find_element(By.CSS_SELECTOR, "[data-testid='username-field']")
     assert name_field.is_displayed()
 
     placeholder = name_field.get_attribute("placeholder")
 
-    assert placeholder == "Введите ваше имя"
+    assert placeholder == user_names[""]
 
     name_field.clear()
     time.sleep(2)
