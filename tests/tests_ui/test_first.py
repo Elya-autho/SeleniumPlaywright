@@ -12,21 +12,25 @@ def test_name_field(browser, base_url, user_names):
 
     placeholder = name_field.get_attribute("placeholder")
 
-    assert placeholder == user_names[""]
+    assert placeholder == user_names["placeholder"]
 
     name_field.clear()
     time.sleep(2)
 
-    name_field.send_keys("Филиппова Эльвина")
+    name_field.send_keys(user_names["first_name"])
     time.sleep(2)
 
     name_field.clear()
     time.sleep(2)
 
-    name_field.send_keys("Смирнов тест")
+    name_field.send_keys(user_names["second_name"])
     time.sleep(2)
 
-    assert name_field.get_attribute("value") == "Смирнов тест"
+    assert name_field.get_attribute("value") == user_names["second_name"]
     time.sleep(2)
+
+
+def test_registration(user_data):
+    print((f""))
 
 
