@@ -26,9 +26,9 @@ def user_names():
     }
 
 @pytest.fixture(params=[
-    {"email":"test1@mail.ru", "username":"user25", "password":"pass1",
-     "email":"test2@mail.ru", "username":"user26", "password":"pass2",
-    "email":"test3@mail.ru", "username":"user27", "password":"pass3"}
+    {"email":"test1@mail.ru", "username":"user25", "password":"pass1"},
+    {"email":"test2@mail.ru", "username":"user26", "password":"pass2"},
+    {"email":"test3@mail.ru", "username":"user27", "password":"pass3"}
 ])
 def user_data(request):
     return request.param

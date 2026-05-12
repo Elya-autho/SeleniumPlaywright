@@ -32,5 +32,6 @@ def test_name_field(browser, base_url, user_names):
 
 def test_registration(user_data):
     print(f"Email:{user_data['email']}")
+    print(f"Username: {user_data['username']}")
 
 
