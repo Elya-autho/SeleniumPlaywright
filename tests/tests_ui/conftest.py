@@ -1,6 +1,9 @@
 import pytest
 from selenium import webdriver
+from faker import Faker
 from selenium.webdriver.support.wait import WebDriverWait
+
+fake = Faker('ru')
 
 @pytest.fixture
 def browser():
@@ -18,17 +21,25 @@ def base_url():
 
 
 @pytest.fixture
+def wait(browser):
+    return WebDriverWait(browser, 10)
+
+
+
+@pytest.fixture
 def user_names():
+    first_name = fake.name()
+    second_name = fake.name_female()
     return {
-        "first_name": "Филиппова Эльвина",
-        "second_name": "Смирнов Иван",
+        "first_name": first_name,
+        "second_name": second_name,
         "placeholder": "Введите ваше имя"
     }
 
 @pytest.fixture(params=[
-    {"email":"test1@mail.ru", "username":"user25", "password":"pass1"},
-    {"email":"test2@mail.ru", "username":"user26", "password":"pass2"},
-    {"email":"test3@mail.ru", "username":"user27", "password":"pass3"}
+    {"email":fake.email(), "username":fake.name_male(), "password":fake.password()},
+    {"email":fake.email(), "username":fake.name_male(), "password":fake.password()},
+    {"email":fake.email(), "username":fake.name_male(), "password":fake.password()}
 ])
 def user_data(request):
     return request.param
