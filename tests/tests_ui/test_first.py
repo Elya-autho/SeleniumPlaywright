@@ -112,7 +112,23 @@ def test_dropdown_selection(browser,wait, base_url):
 
     assert "США" in dropdown_button.text
 
+    dropdown_button.click()
 
+    germany_option = wait.until(
+        EC.element_to_be_clickable((By.XPATH, "//*[contains(text(),'Германия')]"))
+    )
+    germany_option.click()
+
+    assert "Германия" in dropdown_button.text
+
+def test_toggle_checkbox(browser, wait, base_url):
+    browser.get(base_url)
+    checkbox = wait.until(
+        EC.visibility_of_element_located((By.CSS_SELECTOR, "[data-testid=terms-agreement']"))
+    )
+    checkbox.click()
+
+    assert checkbox.is_selected()
 
 
 
