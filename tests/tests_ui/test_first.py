@@ -89,6 +89,30 @@ def text_area_multilaine_input(browser, wait, base_url):
 
     assert  textarea.get_attribute("value") == multiline_text
 
+@pytest.mark.ui
+@pytest.mark.smoke
+@pytest.mark.regression
+def test_dropdown_selection(browser,wait, base_url):
+    browser.get(base_url)
+
+    dropdown_button = wait.until(
+        EC.element_to_be_clickable((By.CSS_SELECTOR, "[data-testid='country-dropdown']"))
+    )
+
+    initial_text = dropdown_button.text
+    print(dropdown_button.text)
+    assert initial_text == "Выберите страну"
+
+    dropdown_button.click()
+
+    usa_option = wait.until(
+        EC.element_to_be_clickable((By.XPATH, "//*[contains(text(),'США')]"))
+    )
+    usa_option.click()
+
+    assert "США" in dropdown_button.text
+
+
 
 
 
