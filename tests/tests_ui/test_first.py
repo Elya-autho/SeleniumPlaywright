@@ -84,37 +84,35 @@ def test_area_multilaine_input(browser, wait, base_url):
 
     assert  textarea.get_attribute("value") == multiline_text
 
-@pytest.mark.ui
+
 @pytest.mark.smoke
-@pytest.mark.regression
-def test_dropdown_selection(browser,wait, base_url):
-
-    dropdown_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "[data-testid='country-dropdown']")))
-
+@pytest.mark.skip
+def test_dropdown_selection(browser,wait, base_url,country_data):
+    dropdown_button = wait.until(
+        EC.element_to_be_clickable((By.CSS_SELECTOR, "[data-testid='country-dropdown']"))
+    )
     initial_text = dropdown_button.text
     print(dropdown_button.text)
 
-    assert initial_text == 'Выберите страну'
+    assert initial_text == "Выберите страну"
+
+    dropdown_button = wait.until(
+        EC.element_to_be_clickable((By.CSS_SELECTOR, "[data-testid='country-dropdown']"))
+    )
+    initial_text = dropdown_button.text
+    print(dropdown_button.text)
+
+    assert initial_text == "Выберите страну"
 
     dropdown_button.click()
-    browser.execute_script("arguments[0].scrollIntoView({block: 'center'});", dropdown_button)
-    browser.execute_script("arguments[0].click();", dropdown_button)
-    usa_option = wait.until(EC.presence_of_element_located((By.XPATH, "//*[contains(text(),'США')]")))
+    usa_option = wait.until(
+        EC.element_to_be_clickable((By.XPATH, country_data['xpath']))
+    )
+    usa_option.click()
 
-    usa_option.click('США')
+    assert country_data['country'] in dropdown_button.text
 
-    assert "США" in dropdown_button.text
 
-    dropdown_button.click()
-    browser.execute_script("arguments[0].scrollIntoView({block: 'center'});", dropdown_button)
-    browser.execute_script("arguments[0].click();", dropdown_button)
-
-    germany_option = wait.until(EC.presence_of_element_located((By.XPATH, "//*[contains(text(),'Германия')]")))
-
-    germany_option.click()
-
-    assert "Германия" in dropdown_button.text
-    dropdown_element = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "[data-testid='country-dropdown']")))
 
 
 

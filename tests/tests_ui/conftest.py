@@ -39,6 +39,16 @@ def user_names():
     }
 
 @pytest.fixture(params=[
+    {"country": "Россия", "xpath": "//*[contains(text(), 'Россия')]"},
+    {"country": "США", "xpath": "//*[contains(text(), 'США')]"},
+    {"country": "Германия", "xpath": "//*[contains(text(), 'Германия')]"},
+    {"country": "Франция", "xpath": "//*[contains(text(), 'Франция')]"}
+])
+def country_data(request):
+    return request.param
+
+
+@pytest.fixture(params=[
     {"email":fake.email(), "username":fake.name_male(), "password":fake.password()},
     {"email":fake.email(), "username":fake.name_male(), "password":fake.password()},
     {"email":fake.email(), "username":fake.name_male(), "password":fake.password()}
