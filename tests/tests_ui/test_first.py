@@ -43,8 +43,8 @@ def test_name_field(browser, base_url, user_names,wait):
 @pytest.mark.ui
 @pytest.mark.smoke
 @pytest.mark.regression
-def test_email_field_validation(browser, wait,base_url):
-    browser.get(base_url)
+def test_email_field_validation(browser, wait,base_url,browser_get):
+
 
     email_field = wait.until(
         EC.visibility_of_element_located((By.CSS_SELECTOR,"[data-testid='email-field']"))
@@ -58,8 +58,8 @@ def test_email_field_validation(browser, wait,base_url):
 @pytest.mark.ui
 @pytest.mark.smoke
 @pytest.mark.regression
-def test_password_field_masking(browser, wait, base_url):
-    browser.get(base_url)
+def test_password_field_masking(browser, wait, base_url, browser_get):
+
 
     password_field = wait.until(
         EC.visibility_of_element_located((By.CSS_SELECTOR, "[data-testid='password-field']"))
@@ -78,9 +78,7 @@ def test_password_field_masking(browser, wait, base_url):
 @pytest.mark.ui
 @pytest.mark.smoke
 @pytest.mark.regression
-def text_area_multilaine_input(browser, wait, base_url):
-    browser.get(base_url)
-
+def test_area_multilaine_input(browser, wait, base_url, browser_get):
     textarea = wait.until(
         EC.visibility_of_element_located((By.CSS_SELECTOR, "[data-testid='comment-field']"))
     )
@@ -92,15 +90,13 @@ def text_area_multilaine_input(browser, wait, base_url):
 @pytest.mark.ui
 @pytest.mark.smoke
 @pytest.mark.regression
-def test_dropdown_selection(browser,wait, base_url):
-    browser.get(base_url)
-
+def test_dropdown_selection(browser,wait, base_url, browser_get):
     dropdown_button = wait.until(
         EC.element_to_be_clickable((By.CSS_SELECTOR, "[data-testid='country-dropdown']"))
     )
 
     initial_text = dropdown_button.text
-    print(dropdown_button.text)
+    #print(dropdown_button.text)
     assert initial_text == "Выберите страну"
 
     dropdown_button.click()
@@ -121,14 +117,15 @@ def test_dropdown_selection(browser,wait, base_url):
 
     assert "Германия" in dropdown_button.text
 
-def test_toggle_checkbox(browser, wait, base_url):
-    browser.get(base_url)
+def test_toggle_checkbox(browser, wait, base_url, browser_get):
+
     checkbox = wait.until(
         EC.visibility_of_element_located((By.CSS_SELECTOR, "[data-testid=terms-agreement']"))
     )
     checkbox.click()
 
     assert checkbox.is_selected()
+    
 
 
 

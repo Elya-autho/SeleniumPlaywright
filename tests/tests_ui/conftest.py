@@ -19,6 +19,10 @@ def browser():
 def base_url():
     return 'https://lms.threadqa.ru/xpath-practice-hub/basics'
 
+@pytest.fixture
+def browser_get(browser,base_url):
+    browser.get(base_url)
+
 
 @pytest.fixture
 def wait(browser):
