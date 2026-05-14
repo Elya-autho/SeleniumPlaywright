@@ -22,11 +22,12 @@ def base_url():
 @pytest.fixture
 def browser_get(browser,base_url):
     browser.get(base_url)
+    return browser
 
 
 @pytest.fixture
 def wait(browser):
-    return WebDriverWait(browser, 10)
+    return WebDriverWait(browser,  10)
 
 
 

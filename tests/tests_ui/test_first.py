@@ -46,9 +46,7 @@ def test_name_field(browser, base_url, user_names,wait):
 def test_email_field_validation(browser, wait,base_url,browser_get):
 
 
-    email_field = wait.until(
-        EC.visibility_of_element_located((By.CSS_SELECTOR,"[data-testid='email-field']"))
-    )
+    email_field = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR,"[data-testid='email-field']")))
     valid_email = "user@example.com"
     email_field.send_keys(valid_email)
 
@@ -62,8 +60,7 @@ def test_password_field_masking(browser, wait, base_url, browser_get):
 
 
     password_field = wait.until(
-        EC.visibility_of_element_located((By.CSS_SELECTOR, "[data-testid='password-field']"))
-    )
+        EC.visibility_of_element_located((By.CSS_SELECTOR, "[data-testid='password-field']")))
 
     test_password = "SecurePass123"
     password_field.clear()
@@ -91,42 +88,78 @@ def test_area_multilaine_input(browser, wait, base_url, browser_get):
 @pytest.mark.smoke
 @pytest.mark.regression
 def test_dropdown_selection(browser,wait, base_url, browser_get):
-    dropdown_button = wait.until(
-        EC.element_to_be_clickable((By.CSS_SELECTOR, "[data-testid='country-dropdown']"))
-    )
 
-    initial_text = dropdown_button.text
+    #dropdown_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "[data-testid='country-dropdown']")))
+
+    #initial_text = dropdown_button.text
     #print(dropdown_button.text)
-    assert initial_text == "Выберите страну"
 
-    dropdown_button.click()
+    #assert initial_text == 'Выберите страну'
 
-    usa_option = wait.until(
-        EC.element_to_be_clickable((By.XPATH, "//*[contains(text(),'США')]"))
-    )
-    usa_option.click()
+    #dropdown_button.click()
+    #browser.execute_script("arguments[0].scrollIntoView({block: 'center'});", dropdown_button)
+    #browser.execute_script("arguments[0].click();", dropdown_button)
+    #usa_option = wait.until(EC.presence_of_element_located((By.XPATH, "//*[contains(text(),'США')]")))
 
-    assert "США" in dropdown_button.text
+   # usa_option.click('США')
 
-    dropdown_button.click()
+    #assert "США" in dropdown_button.text
 
-    germany_option = wait.until(
-        EC.element_to_be_clickable((By.XPATH, "//*[contains(text(),'Германия')]"))
-    )
-    germany_option.click()
+    #dropdown_button.click()
+    #browser.execute_script("arguments[0].scrollIntoView({block: 'center'});", dropdown_button)
+    #browser.execute_script("arguments[0].click();", dropdown_button)
 
-    assert "Германия" in dropdown_button.text
+    #germany_option = wait.until(EC.presence_of_element_located((By.XPATH, "//*[contains(text(),'Германия')]")))
 
+    #germany_option.click()
+
+    #assert "Германия" in dropdown_button.text
+    dropdown_element = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "[data-testid='country-dropdown']")))
+
+    # 2. Инициализируем класс Select, передав туда наш элемент
+    select = Select(dropdown_element)
+
+    # Проверяем начальный текст (первую выбранную по умолчанию опцию)
+    initial_text = select.first_selected_option.text
+    print(f"Начальный текст: {initial_text}")
+    assert initial_text == 'Выберите страну'
+
+    # --- ВЫБОР США ---
+    # Выбираем элемент прямо по его видимому тексту на экране
+    select.select_by_visible_text('США')
+
+    # Проверяем, что активная опция изменилась на 'США'
+    assert select.first_selected_option.text == 'США'
+
+    # --- ВЫБОР ГЕРМАНИИ ---
+    # Выбираем Германию тем же способом
+    select.select_by_visible_text('Германия')
+
+    # Проверяем, что теперь выбрана Германия
+    assert select.first_selected_option.text == 'Германия'
+
+
+@pytest.mark.ui
+@pytest.mark.smoke
+@pytest.mark.regression
 def test_toggle_checkbox(browser, wait, base_url, browser_get):
 
-    checkbox = wait.until(
-        EC.visibility_of_element_located((By.CSS_SELECTOR, "[data-testid=terms-agreement']"))
-    )
-    checkbox.click()
+    #checkbox = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "[data-testid='terms-agreement']")))
 
-    assert checkbox.is_selected()
-    
+    #checkbox.click()
 
+    #assert checkbox.is_selected()
+
+    checkbox = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "[data-testid='terms-agreement']")))
+
+    # 2. Скроллим к нему, чтобы он гарантированно отрендерился на экране
+    browser.execute_script("arguments[0].scrollIntoView({block: 'center'});", checkbox)
+
+    # 3. Делаем клик через JS, игнорируя перекрытие кастомными стилями сайта
+    browser.execute_script("arguments[0].click();", checkbox)
+
+    # 4. Проверяем, что состояние чекбокса изменилось на "выбран" (True)
+    assert checkbox.is_selected() is True
 
 
 
