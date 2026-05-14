@@ -6,10 +6,10 @@ from selenium.webdriver.support.wait import WebDriverWait
 fake = Faker('ru')
 
 @pytest.fixture
-def browser():
+def browser(base_url):
 
     driver = webdriver.Chrome()
-
+    driver.get(base_url)
     yield driver
 
     driver.quit()
@@ -19,10 +19,7 @@ def browser():
 def base_url():
     return 'https://lms.threadqa.ru/xpath-practice-hub/basics'
 
-@pytest.fixture
-def browser_get(browser,base_url):
-    browser.get(base_url)
-    return browser
+
 
 
 @pytest.fixture
